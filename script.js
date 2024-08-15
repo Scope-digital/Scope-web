@@ -41,3 +41,16 @@ app.get('*', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+import { builder } from '@builder.io/sdk'
+
+builder.init('7387e6ebbf104f7485033888eb607736')
+builder.apiVersion = 'v3'
+
+builder.get('page').promise().then(content => {
+  // Add the HTML to the element needed, wrapping with our webcomponent library
+  // to fill in any needed interactivity (e.g. lazy loaded images, interactive tabs, etc)
+  document.querySelector('#my-page').innerHTML = `
+    <builder-component model="page">\${content.data.html}</builder-component>
+    <script async src="https://cdn.builder.io/js/webcomponents"></script>
+  `
+});
